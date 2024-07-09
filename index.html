@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://restcountries.com/v3.1/all", true);
+      xhr.onload = function () {
+        if (200 <= xhr.status <= 300) {
+          var response = JSON.parse(xhr.responseText);
+          console.log("All the countries from Asia Task 1");
+          const asianCountries = response.filter(
+            (country) => country.region === "Asia"
+          );
+          const asianCountryNames = asianCountries.map(
+            (country) => country.name.common
+          );
+          const listasianCountryNames = asianCountryNames.map((countries) =>
+            console.log(countries)
+          );
+
+          console.log("Countries less than two lakhs populatio Task 2");
+          let populationLess2Lk = response.filter(
+            (country) => country.population < "200000"
+          );
+          const populationLess2CountryNames = populationLess2Lk.map(
+            (country) => country.name.common
+          );
+          console.log("");
+          console.log(
+            "the List of countries with a population of less than 2 lakhs "
+          );
+
+          const populationLess2 = populationLess2CountryNames.map((countries) =>
+            console.log(countries)
+          );
+
+          console.log("");
+          console.log("The detail of countries Task 3 ");
+          let detailOfCountries = response.forEach((country) => {
+            console.log("Name : " + country.name.common);
+            console.log("Capital : " + country.capital);
+            console.log("Flag : " + country.flags.png);
+            console.log("------------------------");
+          });
+          console.log("Total population of countries Task 4");
+          const totalPopulation = response.reduce((accumulator, countries) => {
+            accumulator = accumulator + countries.population;
+            return accumulator;
+          }, 0);
+          console.log(
+            "The Total population of countries is " + totalPopulation
+          );
+          console.log("--------------------------")
+
+          console.log(" Countries using US dollar as currency Task 5");
+          let usDollar = response.filter((country) => {
+            return country.currencies && country.currencies.USD;
+          });
+          const dollarCountryNames = usDollar.map(
+            (country) => country.name.common
+          );
+          console.log("---------------");
+          console.log("the List of countries using United States dollar ");
+          console.log("");
+          const dollarCountry = dollarCountryNames.map((countries) =>
+            console.log(countries)
+          );
+        } else {
+          console.log("The Response is Failed");
+        }
+      };
+      xhr.onerror = function () {
+        console.log("Error");
+      };
+      xhr.send();
+    </script>
+  </body>
+</html>
